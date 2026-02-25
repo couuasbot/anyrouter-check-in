@@ -37,7 +37,7 @@
             color: var(--text-main);
             line-height: 1.5;
             padding: 2rem 1rem;
-            background-image: 
+            background-image:
                 radial-gradient(at 0% 0%, rgba(79, 70, 229, 0.1) 0px, transparent 50%),
                 radial-gradient(at 100% 0%, rgba(16, 185, 129, 0.1) 0px, transparent 50%),
                 radial-gradient(at 100% 100%, rgba(239, 68, 68, 0.05) 0px, transparent 50%);
@@ -119,7 +119,7 @@
             padding: 1.5rem;
             display: block;
         }
-        
+
         .card-body.hidden {
             display: none;
         }
@@ -185,7 +185,7 @@
             align-items: center;
             gap: 0.25rem;
         }
-        
+
         .error-text.visible {
             display: flex;
         }
@@ -337,7 +337,7 @@
         .copy-btn:active {
             transform: scale(0.95);
         }
-        
+
         .copy-btn.copied {
             background: #10b981;
             border-color: #10b981;
@@ -363,7 +363,7 @@
             font-size: 0.9rem;
             font-weight: 500;
         }
-        
+
         .toast.show {
             transform: translateX(-50%) translateY(0);
         }
@@ -481,7 +481,7 @@
                     </div>
                     <div class="help-text">支持 Gmail, Outlook, QQ, 163 等常见邮箱自动识别。</div>
                 </div>
-                
+
                 <hr style="border: 0; border-top: 1px dashed var(--border-color); margin: 1.5rem 0;">
 
                 <div class="form-group">
@@ -530,7 +530,7 @@
         function toggleCard(header) {
             const body = header.nextElementSibling;
             const icon = header.querySelector('.chevron');
-            
+
             if (body.classList.contains('hidden')) {
                 body.classList.remove('hidden');
                 icon.style.transform = 'rotate(180deg)';
@@ -566,8 +566,8 @@
                 </div>
                 <div class="form-group">
                     <label>Session Cookie <span style="color:var(--danger)">*</span></label>
-                    <textarea id="session-${accountCount}" rows="2" 
-                        placeholder="粘贴完整的 session 字符串..." 
+                    <textarea id="session-${accountCount}" rows="2"
+                        placeholder="粘贴完整的 session 字符串..."
                         onblur="validateSession(this, ${accountCount})"></textarea>
                     <div class="error-text" id="session-${accountCount}-error">
                         <svg class="icon" style="width:14px;height:14px;" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
@@ -581,7 +581,7 @@
                     </div>
                     <div class="help-text">
                         <label style="display:inline-flex; align-items:center; cursor:pointer; font-size: 0.8rem;">
-                            <input type="checkbox" id="autoId-${accountCount}" checked onchange="toggleManualId(this, ${accountCount})" style="width:auto; margin-right:6px;"> 
+                            <input type="checkbox" id="autoId-${accountCount}" checked onchange="toggleManualId(this, ${accountCount})" style="width:auto; margin-right:6px;">
                             从 Session 自动提取 <span style="color: var(--warning); margin-left: 4px; font-size: 0.75rem;">(可能不准确)</span>
                         </label>
                     </div>
@@ -662,7 +662,7 @@
         function updateProviderDropdowns() {
             const customIds = Array.from(document.querySelectorAll('.p-id')).map(el => el.value.trim()).filter(v => v);
             const selects = document.querySelectorAll('select[id^="provider-"]');
-            
+
             selects.forEach(select => {
                 const currentVal = select.value;
                 select.innerHTML = `
@@ -746,7 +746,7 @@
         function generateSecrets() {
             const secrets = {};
             const accounts = [];
-            
+
             // Collect Accounts
             document.querySelectorAll('.account-item[id^="account-"]').forEach(el => {
                 const id = el.id.split('-')[1];
@@ -756,9 +756,9 @@
                 const provider = document.getElementById(`provider-${id}`).value;
 
                 if (session && apiUser) {
-                    const acc = { 
-                        cookies: { session }, 
-                        api_user: apiUser 
+                    const acc = {
+                        cookies: { session },
+                        api_user: apiUser
                     };
                     if (name) acc.name = name;
                     if (provider !== 'anyrouter') acc.provider = provider;
@@ -849,7 +849,7 @@
         function renderOutput(secrets) {
             const container = document.getElementById('secretsOutput');
             const section = document.getElementById('outputSection');
-            
+
             let html = '';
             for (const [key, val] of Object.entries(secrets)) {
                 html += `
@@ -872,7 +872,7 @@
                 `;
             }
             container.innerHTML = html;
-            
+
             // Add event delegation for copy buttons
             container.querySelectorAll('.copy-btn').forEach(btn => {
                 btn.addEventListener('click', () => {
@@ -882,7 +882,7 @@
                     }
                 });
             });
-            
+
             section.style.display = 'block';
             section.scrollIntoView({ behavior: 'smooth' });
             showToast('✅ 配置已生成，请复制到 GitHub Secrets');
@@ -891,14 +891,14 @@
         function copyText(btn, text) {
             navigator.clipboard.writeText(text).then(() => {
                 const originalHtml = btn.innerHTML;
-                
+
                 // Visual feedback on button
                 btn.classList.add('copied');
                 btn.innerHTML = `
                     <svg class="icon" style="width:14px;height:14px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
                     已复制
                 `;
-                
+
                 showToast('已复制到剪贴板');
 
                 setTimeout(() => {
@@ -915,7 +915,7 @@
             const toast = document.getElementById('toast');
             toast.querySelector('span').textContent = msg;
             toast.classList.add('show');
-            
+
             // Adjust icon based on success/error
             const icon = toast.querySelector('svg');
             if (msg.startsWith('❌')) {
